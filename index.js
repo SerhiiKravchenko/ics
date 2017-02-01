@@ -46,7 +46,7 @@ if (req.status !== 200) {
 			if ((newString.byteLength()+symbol.byteLength()) < (count-space.byteLength())){
 				newString+=symbol;
 			}else {
-				newString+="\n"+ space;
+				newString+="\n"+ space + symbol;
 				space+=" ";
 				count+=60;
 			}	
