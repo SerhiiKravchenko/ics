@@ -29,13 +29,15 @@ if (req.status !== 200) {
 } else {
     let parsedData = JSON.parse(req.responseText);
     let calendar = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:s.kravchenko.org.ua\n";
+    // parsedData.forEach((el, index, arr) => { }) попробуй использовать стрелочные функции
     parsedData.forEach(function(element, i, arr) {
+       // приучи себя не писать цепочные вызовы. Обязательно к прочтению книга Роберта Мартина "Чистый код"
        calendar+=("BEGIN:VEVENT\nSUMMARY:"+textSplit(element.title)+"\nLOCATION:"+textSplit(element.location)+"\nURL:"
            +textSplit(element.url)+"\nDTSTAMP:"+dateDtstamp()+"\nDTSTART:"+dateIcs(element.start)+"\nDTEND:"+dateIcs(element.end)
             +"\nUID:"+element.id+"\nEND:VEVENT\n");
         if(i == arr.length-1){calendar+="END:VCALENDAR\n"}
     });
-	
+    // лучше писать str или valueString String зарезервирование слово 
     function textSplit(string) {
         if ((string.byteLength())>60){		
 		let space = " ";
@@ -56,6 +58,7 @@ if (req.status !== 200) {
         } else return string;
     }
     function dateIcs(string){
+	// [a-Z0-9] == [a-zA-Z0-9]
         let str = string.replace(/[^a-zA-Z0-9]/g, '').slice(0,-4);
         if(str.length<15){
             str+=0
